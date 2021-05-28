@@ -2,6 +2,7 @@
 <!------ Include the above in your HEAD tag ---------->
 <link rel="stylesheet" href="css/menu.css" type="text/css">
 <!-- Team -->
+<center>
 <section id="team" class="pb-5">
     <div class="container">
         <h5 class="section-title ">MENU</h5>
@@ -72,7 +73,7 @@
                         <div class="backside">
                             <div class="card">
                                 <div class="card-body text-center mt-4">
-                                    <h6 class="card-title">Gian Hàng Script</h6>
+                                    <h6 class="card-title">Nạp Tiền</h6>
                                     <p class="card-text">Chưa ra mắt.</p>
                                 </div>
                             </div>
@@ -97,8 +98,8 @@
                         <div class="backside">
                             <div class="card">
                                 <div class="card-body text-center mt-4">
-                                    <h6 class="card-title">Gian Hàng Script</h6>
-                                    <p class="card-text">Chưa ra mắt.</p>
+                                    <h6 class="card-title">Pixel Art</h6>
+                                    <p class="card-text">Thử Nghiệm</p>
                                 </div>
                             </div>
                         </div>
@@ -122,7 +123,7 @@
                         <div class="backside">
                             <div class="card">
                                 <div class="card-body text-center mt-4">
-                                    <h6 class="card-title">Gian Hàng Script</h6>
+                                    <h6 class="card-title">Script Free</h6>
                                     <p class="card-text">Chưa ra mắt.</p>
                                 </div>
                             </div>
@@ -152,3 +153,4 @@
     </div>
 </section>
 <!-- Team -->
+</center>

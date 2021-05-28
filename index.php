@@ -30,7 +30,7 @@
     
 <footer>
 	<p>
-		Đăng chỉ là phiên bản demo!!!
+		DevMini
 	</p>
 </footer>
 </body>
