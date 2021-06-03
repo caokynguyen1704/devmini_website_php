@@ -35,7 +35,7 @@ function printPicture() {
 	$(".progress").show();
 	$("._getcode").hide();
 	if ($(".selectPixel option:selected").val()!="0"){
-		if(location.pathname=="/devmini/pixel/"){
+		if(location.pathname=="/pixel/"){
 			getcode(uid);
 		}
 	}
@@ -44,6 +44,7 @@ function resize(valueKey){
 	$.getJSON( "./key.php?key="+valueKey, function( data ) {
 		console.log("Select Size to "+data.value)
 		changeSize(picture,data.value)
+		$(".getcode").val(valueKey)
 	  });
 }
 function processImage(file) {
@@ -270,5 +271,6 @@ function download() {
     element.click();
     document.body.removeChild(element);
 }
+
 
 */?>

@@ -1,3 +1,4 @@
+<?php ob_start(); session_start(); ?>
 <?php 
 
 function getValue($strName,$keyName){
@@ -64,3 +65,4 @@ if (isset($_GET['uid'])){
     echo $myJSON;
 }
 ?>
+<?php ob_flush(); ?>

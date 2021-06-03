@@ -1,3 +1,4 @@
+
 <link rel="stylesheet" href="css/login.css" type="text/css">
 <div class="wrapper fadeInDown loginDiv">
   <div id="formContent">
@@ -59,31 +60,35 @@
 
 
 <?php
-        require "package/request.php";
+        
             if ((isset($_POST))&&(isset($_POST['username']))&&(isset($_POST['password']))){
-                $sql="select * from memInform where username= :user and pass= :pass";
-                $stmt=$pdo->prepare($sql);
-                $stmt->execute(array(
-                    ':user'=>$_POST['username'],
-                    ':pass'=>md5($_POST['password'])
+              $sql_login="SELECT * from memInform where username= :user1 and pass= :pass";
+              $stmt_login=$pdo->prepare($sql_login);
+              $stmt_login->execute(array(
+                ':user1'=>$_POST['username'],
+                ':pass'=>md5($_POST['password'])
+              ));
+              $rows_login=$stmt_login->fetchAll(PDO::FETCH_ASSOC);
+              sleep(1);
+              if(count($rows_login)==1){
+                unset($_SESSION['userCode']);
+                $_SESSION['userCode']=$rows_login[0]['ID'];
+                unset($_SESSION['office']);
+                $_SESSION['office']=$rows_login[0]['office'];
+                $sql_login1='UPDATE memInform SET lastLogin=CURRENT_DATE() WHERE ID=:id';
+                $stmt_login1=$pdo->prepare($sql_login1);
+                $stmt_login1->execute(array(
+                  ':id'=>$_SESSION['userCode']
                 ));
-                $rows=$stmt->fetchAll();
-                if(count($rows)==1){
-                    unset($_SESSION['userCode']);
-                    $_SESSION['userCode']=$rows[0]['ID'];
-
-                    $sql='UPDATE memInform SET lastLogin=CURRENT_DATE() WHERE ID=:id';
-                    $stmt=$pdo->prepare($sql);
-                    $stmt->execute(array(
-                      ':id'=>$_SESSION['userCode']
-                    ));
-                    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-                }else{
-                    $_SESSION["errorLogin"] = "Sai Thông Tin Đăng Nhập.";
-                }
+                //$stmt_login1->fetchAll(PDO::FETCH_ASSOC);
                 
-                header( 'Location: ./' ) ;
-                exit;
+                //header("Location: ./index.php") ;
+                //exit(); 
+              }else{
+                $_SESSION["errorLogin"] = "Sai Thông Tin Đăng Nhập.";
+              }
+              header("Location: ./index.php") ;
+              exit();  
             }
+            
 ?>

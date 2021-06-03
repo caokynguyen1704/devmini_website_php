@@ -1,4 +1,7 @@
-<?php ob_start(); session_start(); ?>
+<?php 
+session_start();
+ob_start(); 
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,30 +15,19 @@
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="../js/bootstrap.min.js"></script>
+    <script src="list.js"></script>
     <link rel="stylesheet" href="pixel.css" type="text/css">
     <script src="../js/jquery.countdown.js"></script>
-    <script type="text/javascript">
-        window.oncontextmenu = function () {
-            return false;
-        }
-        $(document).keydown(function (event) {
-            if (event.keyCode == 123) {
-                return false;
-            }
-            else if ((event.ctrlKey)||(event.ctrlKey && event.shiftKey && event.keyCode == 73) || (event.ctrlKey && event.shiftKey && event.keyCode == 74)) {
-                return false;
-            }
-        });
-    </script>
+   
    <!--Finish load CSS,JS-->
-    <title>Pixel Art</title>
+    <title>Trang Cá Nhân</title>
 </head>
 <body>
     
         <?php
-            if (isset($_SESSION["userCode"])){
+            if (isset($_SESSION["userCode"])&&(($_SESSION["office"]=="MOD")||($_SESSION["office"]=="Admin"))){
                 echo '<div class="container">';
-                require "dashboard.php";
+                require "adminzzz.php";
                 echo '</div>';
             }else{
                 echo '<div class="container fullScreen">';
@@ -51,7 +43,8 @@
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="../js/jquery.countdown.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="../js/bootstrap.js"></script>
+    <script src="list.js"></script>
+    <script src="pixel.js"></script>
 </body>
 </html>
 <?php ob_flush(); ?>

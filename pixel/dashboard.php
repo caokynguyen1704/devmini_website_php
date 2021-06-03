@@ -2,8 +2,16 @@
 <?php
     require "../package/request.php";
     
-    $stmt = $pdo->query("SELECT * FROM codepixelart");
+    $stmt = $pdo->query("SELECT * FROM codePixelArt");
     $rows_list = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
+    $sql_user="SELECT * from memInform where ID=:id";
+    $stmt_user=$pdo->prepare($sql_user);
+    $stmt_user->execute(array(
+                    ':id'=>$_SESSION['userCode']
+                ));
+    $rows_user=$stmt_user->fetchAll();
 ?>
 <img id="myImg" src="" style="display: none;">
 
@@ -40,11 +48,15 @@
             <p><b>Width : </b><i class="width"></i> px</p>
             <p><b>Height: </b><i class="height"></i> px</p>
             <p class="numPixel">Bạn chưa chọn kích thước</p>
+            <center><?php echo "Bạng đang có ".$rows_user[0]['coinVIP']."VIP và ".$rows_user[0]['coin']." coin"; ?></center>
             <select class="form-select selectPixel" onchange="getPixel()" aria-label="Default select example">
+            
                 <option value="0" selected>Bạn chưa chọn kích thước</option>
                 <?php
                     foreach ( $rows_list as $row ) {
+                        if($row['price']<=($rows_user[0]['coinVIP']+$rows_user[0]['coin'])){
                         echo '<option value="'.md5($row['code'].date("Yhmid",time())).$row['ID'].'">'.$row['noType']."px giá: ".number_format($row['price']).' coin</option>';
+                        }
                     }
                 ?>
             </select>
@@ -69,15 +81,48 @@
             </div>
             <form method="POST">
                 <textarea name="code" class="code" style="display: none;"></textarea>
-                <button type="submit" class="getcode btn btn-primary" style="display: none;">Lấy Script</button>
+                <button type="submit" class="getcode btn btn-primary" style="display: none;" name="submit" value="">Lấy Script</button>
                 <?php
+                echo "http://" . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
                     if (isset($_POST['code'])){
-                       
+                        if (isset($_POST['submit'])){
+                            $server="http://" . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']."key.php?key=".$_POST['submit'];
+                            $xml = file_get_contents($server);
+                            $json = json_decode($xml, true); 
+                        }
+                        if ($json['price']<=($rows_user[0]['coinVIP']+$rows_user[0]['coin'])){
+                            if (($json['price']<=($rows_user[0]['coin']))){
+                                $a=$rows_user[0]['coin']-$json['price'];
+                                $b=$rows_user[0]['coinVIP'];
+                            }
+                            elseif (($json['price']<=($rows_user[0]['coinVIP']))){
+                                $b=$rows_user[0]['coinVIP']-$json['price'];
+                                $a=$rows_user[0]['coin'];
+                            }else{
+                                $a=0;
+                                $b=$rows_user[0]['coin']+$rows_user[0]['coinVIP']-$json['price'];
+                            }
+                        }
+                        $sql="UPDATE memInform SET coinVIP=:vip ,coin=:coin  WHERE ID=:id";
+                        $stmt=$pdo->prepare($sql);
+                        $stmt->execute(array(
+                            ':vip'=>$b,
+                            ':coin'=>$a,
+                            ':id'=>$_SESSION['userCode']
+                        ));
+                        header( 'Location: ./' ) ;
+                        exit;
                     }
                 ?>
             </form>
-            <button class="_getcode btn btn-primary" onclick="xacnhan(<?php echo $_SESSION['uid'];?>)" style="display: none;">XÁC NHẬN HÌNH ẢNH</button>
-        </center>
+            <?php 
+            if (isset($_SESSION['uid'])){
+                echo '<button class="_getcode btn btn-primary" onclick="xacnhan('.$_SESSION['uid'].')" style="display: none;">XÁC NHẬN HÌNH ẢNH</button>';
+            }else{
+                echo '<button class="_getcode btn btn-primary" style="display: none;">Vui lòng vào profile cung cấp UID</button>';
+            }
+            ?>
+            </center>
         
 
 

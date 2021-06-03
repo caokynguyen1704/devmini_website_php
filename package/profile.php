@@ -1,5 +1,16 @@
 <link rel="stylesheet" href="css/profile.css" type="text/css">
 <?php
+
+function get_content($URL){
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_URL, $URL);
+    $data = curl_exec($ch);
+    curl_close($ch);
+    return $data;
+}
+
+
     require "package/request.php";
     
         $sql="select * from memInform where ID=:id";
@@ -7,7 +18,7 @@
         $stmt->execute(array(
             ':id'=>$_SESSION['userCode']
         ));
-        $rows=$stmt->fetchAll();
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         
         function getValue($strName,$keyName){
@@ -40,7 +51,16 @@
             return "ERROR";
         }
         $server="http://hwshequ.mini1.cn:8080/miniw/profile?act=getProfile&op_uin=".(1000000000+$rows[0]['uidMW'])."&auth=638ec4f1e4b7de067cc27e7aa35f1db3&uin=".(1000000000+$rows[0]['uidMW'])."&ver=0.42.1&apiid=410&lang=10&country=VN";
-        $xml = file_get_contents($server);
+        /*$opts = array(
+            'http'=>array(
+              'method'=>"GET",
+              'header'=>"Accept-language: en\r\n" .
+                        "Cookie: foo=bar\r\n"
+            )
+          );
+          $context = stream_context_create($opts);
+        $xml = file_get_contents($server,false,$context);*/
+        $xml= get_content($server);
         $textMood=getValue($xml,'["mood_text"]="');
 ?>
 <div class="card-container">
@@ -156,7 +176,8 @@ if (isset($rows[0]['uidMW'])==false){
         unset($_SESSION['uid']);
         $_SESSION['uid']=$_POST['uid'];
         $server="http://hwshequ.mini1.cn:8080/miniw/profile?act=getProfile&op_uin=".(1000000000+$_POST['uid'])."&auth=638ec4f1e4b7de067cc27e7aa35f1db3&uin=".(1000000000+$_POST['uid'])."&ver=0.42.1&apiid=410&lang=10&country=VN";
-        $xml = file_get_contents($server);
+        //$xml = file_get_contents($server);
+        $xml= get_content($server);
         $url=getValue($xml,'["url"]="');
         $name=getValue($xml,'["NickName"]="');
         $img=$url;
@@ -164,16 +185,15 @@ if (isset($rows[0]['uidMW'])==false){
             $model=getValue_int($xml,'["Model"]=');
             $img='https://map1.mini1.cn/roleicon/'.$model.'.png';
         }
-        $sql="UPDATE memInform SET uidMW=:idMW ,avatarMW=:avt ,nameMW=:nameMW  WHERE ID=:id";
-                $stmt=$pdo->prepare($sql);
-                $stmt->execute(array(
+        $sql11="UPDATE memInform SET uidMW=:idMW ,avatarMW=:avt ,nameMW=:nameMW  WHERE ID=:id";
+                $stmt11=$pdo->prepare($sql11);
+                $stmt11->execute(array(
                     ':idMW'=>$_POST['uid'],
                     ':avt'=>$img,
                     ':nameMW'=>$name,
                     ':id'=>$_SESSION['userCode']
                 ));
-                $rows=$stmt->fetchAll();
-                header( 'Location: ./profile.php' ) ;
-                exit;
+                header( "Location: ./profile.php");
+                exit();
     }
 ?>
