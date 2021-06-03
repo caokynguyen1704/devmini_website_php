@@ -2,10 +2,11 @@
 <!------ Include the above in your HEAD tag ---------->
 <link rel="stylesheet" href="css/menu.css" type="text/css">
 <!-- Team -->
+<br>
 <center>
 <section id="team" class="pb-5">
     <div class="container">
-        <h5 class="section-title ">MENU</h5>
+    <?php require "./package/thongbao.php";?>
         <div class="row">
             <!-- Team member -->
             <div class="col-xs-12 col-sm-6 col-md-4" onclick="window.location.replace('./profile.php');">

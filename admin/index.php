@@ -18,7 +18,14 @@ ob_start();
     <script src="list.js"></script>
     <link rel="stylesheet" href="pixel.css" type="text/css">
     <script src="../js/jquery.countdown.js"></script>
-   
+   <style>
+    .show {
+        background-color: white;
+        border: 1px solid;
+        padding: 10px;
+        box-shadow: 5px 10px #888888;
+    }
+   </style>
    <!--Finish load CSS,JS-->
     <title>Trang Cá Nhân</title>
 </head>
@@ -26,8 +33,36 @@ ob_start();
     
         <?php
             if (isset($_SESSION["userCode"])&&(($_SESSION["office"]=="MOD")||($_SESSION["office"]=="Admin"))){
-                echo '<div class="container">';
-                require "adminzzz.php";
+                echo '<div class="container show add">';
+                echo "<h2>Thêm Tài Khoản</h2>";
+                require "addUser.php";
+                echo '<br><button type="button" onclick="showEdit()" class="btn btn-outline-primary">Đi Tới Sửa Tài Khoản</button>';
+                echo '<button type="button" onclick="showList()" class="btn btn-outline-primary">Đi Tới Danh Sách Tài Khoản</button>';
+                echo '<button type="button" onclick="showThongBao()" class="btn btn-outline-primary">Đi Tới Tạo Thông Báo</button>';
+                echo '</div>';
+
+                echo '<div class="container show change" style="display:none;">';
+                echo "<h2>Sửa Tài Khoản</h2>";
+                require "changePass.php";
+                echo '<br><button type="button" onclick="showAdd()" class="btn btn-outline-primary">Đi Tới Thêm Tài Khoản</button>';
+                echo '<button type="button" onclick="showList()" class="btn btn-outline-primary">Đi Tới Danh Sách Tài Khoản</button>';
+                echo '<button type="button" onclick="showThongBao()" class="btn btn-outline-primary">Đi Tới Tạo Thông Báo</button>';
+                echo '</div>';
+
+                echo '<div class="container show list" style="display:none;">';
+                echo "<h2>Danh Sách Tài Khoản</h2>";
+                require "list.php";
+                echo '<br><button type="button" onclick="showAdd()" class="btn btn-outline-primary">Đi Tới Thêm Tài Khoản</button>';
+                echo '<br><button type="button" onclick="showEdit()" class="btn btn-outline-primary">Đi Tới Sửa Tài Khoản</button>';
+                echo '<button type="button" onclick="showThongBao()" class="btn btn-outline-primary">Đi Tới Tạo Thông Báo</button>';
+                echo '</div>';
+
+                echo '<div class="container show thongbao" style="display:none;">';
+                echo "<h2>Thông Báo Trang Chủ</h2>";
+                require "addThongBao.php";
+                echo '<br><button type="button" onclick="showAdd()" class="btn btn-outline-primary">Đi Tới Thêm Tài Khoản</button>';
+                echo '<br><button type="button" onclick="showEdit()" class="btn btn-outline-primary">Đi Tới Sửa Tài Khoản</button>';
+                echo '<button type="button" onclick="showList()" class="btn btn-outline-primary">Đi Tới Danh Sách Tài Khoản</button>';
                 echo '</div>';
             }else{
                 echo '<div class="container fullScreen">';
@@ -40,11 +75,36 @@ ob_start();
 		    VỀ TRANG CHỦ
 	    </p>
     </footer>
+    <script>
+        function showAdd(){
+            $(".add").show()
+            $(".change").hide()
+            $(".list").hide()
+            $(".thongbao").hide()
+        }
+        function showEdit() {
+            $(".add").hide()
+            $(".change").show()
+            $(".list").hide()
+            $(".thongbao").hide()
+        }
+        function showList(){
+            $(".list").show()
+            $(".add").hide()
+            $(".change").hide()
+            $(".thongbao").hide()
+        }
+        function showThongBao(){
+            $(".list").hide()
+            $(".add").hide()
+            $(".change").hide()
+            $(".thongbao").show()
+        }
+    </script>
+
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="../js/jquery.countdown.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="list.js"></script>
-    <script src="pixel.js"></script>
 </body>
 </html>
 <?php ob_flush(); ?>

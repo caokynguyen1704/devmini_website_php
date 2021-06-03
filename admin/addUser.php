@@ -1,4 +1,4 @@
-<form method="POST">
+<form method="POST" style="background-color: white;">
   <div class="form-group">
     <label for="exampleInputEmail1">Username</label>
     <input type="text" name="user" class="form-control" placeholder="Username" required>
@@ -17,14 +17,20 @@
   </div>
   <div class="form-group">
     <label for="exampleInputPassword1">Số Coin</label>
-    <input type="number" name="coin" class="form-control" id="exampleInputPassword1" placeholder="Số coin" required>
+    <!-- <input type="number" name="coin" class="form-control" id="exampleInputPassword1" placeholder="Số coin" required> -->
+    <select name="coin" require>
+        <option selected value="10000">Người dùng thông thường</option>
+        <option value="30000">Người dùng chuẩn</option>
+        <option value="50000">Người dùng tài năng</option>
+    </select>
   </div>
-  <button type="submit" class="btn btn-primary">Thêm Tài Khoản</button>
+  <br>
+  <button type="submit" name="add" class="btn btn-primary">Thêm Tài Khoản</button>
 </form>
 
 <?php
     require "../package/request.php";
-    if (isset($_POST)){
+    if (isset($_POST['add'])){
         if ((isset($_POST['pass']))&&(isset($_POST['user']))){
             $sql="select * from memInform where username=:userN";
             $stmt=$pdo->prepare($sql);

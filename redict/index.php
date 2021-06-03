@@ -35,7 +35,9 @@ session_start();
 <body>
 
 <?php
-        header("Location: https://dev-mw.000webhostapp.com/");
+        sleep(3);
+        echo "DevMini - Đang chuyển hướng";
+        header("Location: http://dev-mw.000webhostapp.com/");
         exit();
 ?>
 </body>

@@ -106,6 +106,10 @@ function get_content($URL){
     </tr>
   </tbody>
 </table>
+<form method="GET" action="view.php" class="d-flex">
+        <input class="form-control me-2" name="username" type="search" placeholder="Nhập Username" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
 	</div>
 </div>
 

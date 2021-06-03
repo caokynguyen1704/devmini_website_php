@@ -26,6 +26,13 @@ CREATE TABLE codePixelArt(
     PRIMARY KEY (ID)
 )
 
+CREATE TABLE thongbao(
+    ID int NOT NULL AUTO_INCREMENT,
+    class varchar(255),
+    content VARCHAR(255),
+    PRIMARY KEY (ID)
+)
+
 INSERT INTO memInform(username,pass) VALUES ("caoky9x","80705e387c6c187d9788857e0931fb8d")
 INSERT INTO codePixelArt(noType, code, price) VALUE (64,"64px",5000)
 INSERT INTO codePixelArt(noType, code, price) VALUE (128,"128px",15000)
