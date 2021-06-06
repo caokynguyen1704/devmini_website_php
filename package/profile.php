@@ -79,15 +79,8 @@ function get_content($URL){
 	</div>
 	<div class="skills">
 		<h6>Lịch sử</h6>
-		<!--<ul>
-			<li>UI / UX</li>
-			<li>Front End Development</li>
-			<li>HTML</li>
-			<li>CSS</li>
-			<li>JavaScript</li>
-			<li>React</li>
-			<li>Node</li>
-		</ul>-->
+  
+		
         <table class="table table-dark">
   <thead>
     <tr>
@@ -98,12 +91,28 @@ function get_content($URL){
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
+  <?php
+
+$sql111="SELECT * from history where idUser=:id";
+$stmt111=$pdo->prepare($sql111);
+$stmt111->execute(array(
+    ':id'=>$_SESSION['userCode']
+));
+$rows111 = $stmt111->fetchAll(PDO::FETCH_ASSOC);
+if (isset($rows111)){
+foreach ($rows111 as $row){
+    if (!(isset($row['realValue']))){
+        $row['realValue']=0;
+    }
+echo '<tr>
+<th scope="row">'.$row['requestId'].'</th>
+<td>'.$row['createdDay'].'</td>
+<td>'.$row['messageCard'].'</td>
+<td>'.number_format($row['realValue']).'</td>
+</tr>';
+}}
+    ?>
+    
   </tbody>
 </table>
 <form method="GET" action="view.php" class="d-flex">
@@ -112,7 +121,8 @@ function get_content($URL){
       </form>
 	</div>
 </div>
-
+<br>
+<br>
 <footer>
 	<p onclick="window.location.replace('./')";>
 		VỀ TRANG CHỦ

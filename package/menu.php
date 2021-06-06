@@ -59,7 +59,7 @@
             </div>
             <!-- ./Team member -->
             <!-- Team member -->
-            <div class="col-xs-12 col-sm-6 col-md-4">
+            <div class="col-xs-12 col-sm-6 col-md-4" onclick="window.location.replace('./payment/');">
                 <div class="image-flip" ontouchstart="this.classList.toggle('hover');">
                     <div class="mainflip">
                         <div class="frontside">
@@ -75,7 +75,7 @@
                             <div class="card">
                                 <div class="card-body text-center mt-4">
                                     <h6 class="card-title">Nạp Tiền</h6>
-                                    <p class="card-text">Chưa ra mắt.</p>
+                                    <p class="card-text">Thử Nghiệm.</p>
                                 </div>
                             </div>
                         </div>
